@@ -1,80 +1,109 @@
-# Zip-Compression-Decompression
-Developed a CLI Tool for Zip Compression and Decompression in Rust
-This is a Rust based CLI tool.It allows users to copy files,compress files & decompress files
-I build it to understand the low level file handling CLI tools
+Zip-Compression-Decompression (Rust CLI Tool)
 
-A command line tool written in **Rust** to **copy,compress, and decompress files** using the ZIP format
-This project was built to understand:
-1.File I/O in rust
-2.CLI argument parsing
-3.Compression & decompression
-4.Folder traversal
-5.Structure
----
-##Features
--Copy files
--compress single or multiple files into '.zip' files
--compress file
--decompress files
--modular design
----
-Tech Stack
-**Rust**
-**clap** - CLI argument parsing
-**zip** - compression & decompression
-**walkdir** - folder traversal
-Standard Rust Built-in 'std::fs' and 'std::io'
----
+A Rust-based Command Line Interface (CLI) tool to copy files, compress files, and decompress ZIP archives.
 
-Project Structure:
+This project was built to understand low-level file handling and CLI tool development in Rust.
+
+📌 Project Overview
+
+This CLI tool allows users to:
+
+Copy files
+
+Compress single or multiple files into a .zip archive
+
+Decompress ZIP files
+
+The project focuses on understanding how real-world CLI utilities work internally.
+
+🎯 What I Learned
+
+File I/O in Rust
+
+CLI argument parsing
+
+Compression & decompression concepts
+
+Folder traversal
+
+Modular project structure
+
+Error handling using Result
+
+✨ Features
+
+📂 Copy files
+
+🗜️ Compress single files
+
+🗜️ Compress multiple files into a ZIP archive
+
+📦 Decompress ZIP files
+
+🧩 Modular and clean project design
+
+🛠 Tech Stack
+
+Rust
+
+clap – CLI argument parsing
+
+zip – Compression & decompression
+
+walkdir – Folder traversal
+
+std::fs and std::io – File and I/O handling
+
+📁 Project Structure
 src/
-|-main.rs
-|-compress.rs
-|-decompress.rs
-|-file_io.rs
-|-cargo.toml
+├── main.rs
+├── compress.rs
+├── decompress.rs
+├── file_io.rs
+├── Cargo.toml
 
-Run:
-Clone repository
-```bash
+🚀 How to Run
+Clone the Repository
 git clone <repo>
 cd rust-pro
 
-Build the project:
-```bash
+Build the Project
 cargo build
 
-Run using the commands
-1.copy:
-```bash
+📌 Usage
+1️⃣ Copy File
 cargo run -- copy input.txt output.txt
-2.Compress single file:
-```bash
+
+2️⃣ Compress a Single File
 cargo run -- compress file.txt -o file.zip
-3.Compress multiple file:
-```bash
+
+3️⃣ Compress Multiple Files
 cargo run -- compress f1.txt,f2.txt -o files.zip
-4.Decompress Zip:
-```bash
-cargo run -- decompressed archieve.zip -o output
 
-**Compression details:
-Uses Deflate algorithm
-Real compression - zip reduces size
-decompression
+4️⃣ Decompress ZIP File
+cargo run -- decompress archive.zip -o output
 
-Learnings:
-File Handling in rust
-Working with crates
-Error handling with result
-CLI patterns
-Understand compression
+⚙️ Compression Details
 
-Future Improvements:
+Uses Deflate compression algorithm
+
+Performs real compression (ZIP reduces file size)
+
+Supports decompression of ZIP archives
+
+🔮 Future Improvements
+
 Custom archive format
-Manual zip writing
-Binary releases
 
-Author:
+Manual ZIP writing (without external crates)
+
+Cross-platform binary releases
+
+Progress indicators
+
+Directory compression support
+
+👤 Author
+
 Madhusudhanan S
-CSBS - SCE
+CSBS – SCE
