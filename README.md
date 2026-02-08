@@ -1,66 +1,64 @@
-Zip-Compression-Decompression (Rust CLI Tool)
+# Zip-Compression-Decompression (Rust CLI Tool)
 
-A Rust-based Command Line Interface (CLI) tool to copy files, compress files, and decompress ZIP archives.
+A **Rust-based Command Line Interface (CLI) tool** to **copy files, compress files, and decompress ZIP archives**.
 
-This project was built to understand low-level file handling and CLI tool development in Rust.
+This project was built to understand **low-level file handling and CLI tool development in Rust**.
 
-📌 Project Overview
+---
+
+## 📌 Project Overview
 
 This CLI tool allows users to:
 
-Copy files
-
-Compress single or multiple files into a .zip archive
-
-Decompress ZIP files
+- Copy files
+- Compress single or multiple files into a `.zip` archive
+- Decompress ZIP files
 
 The project focuses on understanding how real-world CLI utilities work internally.
 
-🎯 What I Learned
+---
 
-File I/O in Rust
+## 🎯 What I Learned
 
-CLI argument parsing
+- File I/O in Rust
+- CLI argument parsing
+- Compression & decompression concepts
+- Folder traversal
+- Modular project structure
+- Error handling using `Result`
 
-Compression & decompression concepts
+---
 
-Folder traversal
+## ✨ Features
 
-Modular project structure
+- 📂 Copy files
+- 🗜️ Compress single files
+- 🗜️ Compress multiple files into a ZIP archive
+- 📦 Decompress ZIP files
+- 🧩 Modular and clean project design
 
-Error handling using Result
+---
 
-✨ Features
+## 🛠 Tech Stack
 
-📂 Copy files
+- **Rust**
+- **clap** – CLI argument parsing
+- **zip** – Compression & decompression
+- **walkdir** – Folder traversal
+- **std::fs** and **std::io** – File and I/O handling
 
-🗜️ Compress single files
+---
 
-🗜️ Compress multiple files into a ZIP archive
+## 📁 Project Structure
 
-📦 Decompress ZIP files
-
-🧩 Modular and clean project design
-
-🛠 Tech Stack
-
-Rust
-
-clap – CLI argument parsing
-
-zip – Compression & decompression
-
-walkdir – Folder traversal
-
-std::fs and std::io – File and I/O handling
-
-📁 Project Structure
+```text
 src/
 ├── main.rs
 ├── compress.rs
 ├── decompress.rs
 ├── file_io.rs
 ├── Cargo.toml
+
 
 🚀 How to Run
 Clone the Repository
