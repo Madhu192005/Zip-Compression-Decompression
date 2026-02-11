@@ -8,25 +8,29 @@ use crate::file_io;
 use walkdir::WalkDir;
 use std::path::Path;
 
-
 pub fn deflate(data:&[u8])->Result<Vec<u8>>{
+    // Create deflate encoder with BEST compression
     let mut encoder=DeflateEncoder::new(Vec::new(),Compression::best());
-    encoder.write_all(data)?;
-    Ok(encoder.finish()?)
+    encoder.write_all(data)?;//write raw data into encoder
+    Ok(encoder.finish()?) //finish compression and return comp bytes
 }
 
 pub fn single(input:&str,output:&str)->Result<()>{
+    //read file into memory
     let data=file_io::to_read(input)?;
     let org_size=data.len();
+    //compress data
     let comp=deflate(&data)?;
     let comp_size=comp.len();
     let zipf=File::create(output)?;
     let mut zip=ZipWriter::new(zipf);
+    // ZIP options: Stored (NO zip-level compression)
     let options=FileOptions::default().compression_method(zip::CompressionMethod::Stored);
+    // Extract only file name (no full path)
     let name=Path::new(input).file_name().unwrap().to_string_lossy();
-    zip.start_file(name,options)?;
-    zip.write_all(&comp)?;
-    zip.finish()?;
+    zip.start_file(name,options)?; //Add file entry
+    zip.write_all(&comp)?;//write already compressed bytes
+    zip.finish()?;//finish zip
     println!("{}",org_size); //org size
     println!("{}",output); //zip
     println!("{}",comp_size); //comp size: in bytes
@@ -63,15 +67,15 @@ pub fn folder(input_dir:&str,output:&str)->Result<()>{
         };
         let name=relative.to_string_lossy();
         if entry.file_type().is_dir() {
-            zip.add_directory(format!("{}/",name),options)?;
+            zip.add_directory(format!("{}/", name), options)?;
         }else{
             let data=file_io::to_read(path.to_str().unwrap())?;
             let compressed=deflate(&data)?;
-            zip.start_file(name.to_string_lossy(), options)?;
+            zip.start_file(name.as_ref(),options)?;
             zip.write_all(&compressed)?;
         }
     }
     zip.finish()?;
-    println!("Folder compressed → {}", output);
+    println!("Folder compressed:{}", output);
     Ok(())
 }
