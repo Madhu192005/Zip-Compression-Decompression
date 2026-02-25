@@ -11,7 +11,10 @@
 5.Decompression
 
 ## Flow:
-![Diagram]("C:\Users\Admin\Pictures\Screenshots\Screenshot 2026-02-25 110625.png")
+![Flow-diagram]("flow-diagram.png")
+<p align="center">
+  <img src="flow-diagram.png" width="600">
+</p>
 
 user command -> CLI -> Compress/decompress ->Compression engine(DEFLATE) ->Zip writer/reader ->File System
 
