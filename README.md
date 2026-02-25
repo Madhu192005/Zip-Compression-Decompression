@@ -1,4 +1,4 @@
-#ZIP COMPRESSION & DECOMPRESSION
+## ZIP COMPRESSION & DECOMPRESSION
 * Build a CLI based Tool for zip compression/decompression in Rust programming language using DEFLATE Algorithm supporting recursive directory compression with file structure
 * The project is command line zip utility built in rust that can compress single file , multiple files , compress entire folder, decompress a zip archive back to original files
 * It reads file , compress their data using the DEFLATE stores them in ZIP format can later extract them back
