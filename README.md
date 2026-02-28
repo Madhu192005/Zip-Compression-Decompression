@@ -51,9 +51,7 @@ Before performing any operation:
 - Verifies read and write permissions.
 - Ensures the path exists.
 - Handles errors using Rust’s ownership and error model:
-  
-```rust
-Result<T, E>
+  Result<T, E>
 ---
 ## 3. Compression (Byte-Level)
 Compression is performed at the byte level.
