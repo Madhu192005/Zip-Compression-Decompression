@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{File,read_dir};
 use std::io::{Write,Result};
 use zip::{ZipWriter,CompressionMethod};
 use zip::write::FileOptions;
@@ -15,6 +15,26 @@ pub fn deflate(data:&[u8])->Result<Vec<u8>>{
     Ok(encoder.finish()?) //finish compression and return comp bytes
 }
 
+fn traverse(base:&Path,current:&Path,zip:&mut ZipWriter<File>,options:FileOptions,)->Result<()>{
+    for entry in read_dir(current)?{
+        let entry=entry?;
+        let path=entry.path();
+        let relative =path.strip_prefix(base).unwrap();
+        let name=relative.to_string_lossy();
+        if path.is_dir(){
+            zip.add_directory(format!("{}/",name),options)?;
+            traverse(base,&path,zip,options)?;
+}
+else{
+    println!("Adding:{}",name);
+    let data=file_io::to_read(path.to_str().unwrap())?;
+    let compressed = deflate(&data)?;
+    zip.start_file(name.as_ref(), options)?;
+    zip.write_all(&compressed)?;}
+    }
+
+Ok(())
+}
 pub fn single(input:&str,output:&str)->Result<()>{
     //read file into memory
     let data=file_io::to_read(input)?;
@@ -79,3 +99,4 @@ pub fn folder(input_dir:&str,output:&str)->Result<()>{
     println!("Folder compressed:{}", output);
     Ok(())
 }
+
