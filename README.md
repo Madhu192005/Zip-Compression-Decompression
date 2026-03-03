@@ -1,103 +1,135 @@
-## ZIP COMPRESSION & DECOMPRESSION
-* Build a CLI based Tool for zip compression/decompression in Rust programming language using DEFLATE Algorithm supporting recursive directory compression with file structure
-* The project is command line zip utility built in rust that can compress single file , multiple files , compress entire folder, decompress a zip archive back to original files
-* It reads file , compress their data using the DEFLATE stores them in ZIP format can later extract them back
+# 📦 ZIP Compression & Decompression CLI (Rust)
 
-## Building steps :
-1.CLI interface
-2.File reading
-3.COmpression
-4.ZIP Packing
-5.Decompression
+A command-line ZIP utility built in **Rust** implementing compression and decompression using the **DEFLATE algorithm**.  
+Supports recursive directory compression while preserving folder structure.
 
-## Flow:
-![Flow-diagram]("flow-diagram.png")
-<p align="center">
-  <img src="flow-diagram.png" width="600">
-</p>
+---
 
-user command -> CLI -> Compress/decompress ->Compression engine(DEFLATE) ->Zip writer/reader ->File System
+## 🚀 What It Does
 
-## Packages:
--zip
--flate2
--clap
+This project:
 
--zip : Library used to create ZIP files, read ZIP archives , Zip rules
--Manual : zip binary format is written 
+- Compresses a single file
+- Compresses multiple files
+- Compresses entire folders recursively
+- Decompresses ZIP archives
+- Preserves original directory hierarchy
+- Implements manual ZIP binary encoding
+- Uses Depth-First Search (DFS) for traversal
 
-## How does it work?
-## 1. CLI Parse
-The application starts in `main.rs`.
-- CLI arguments are parsed using the `clap` library.
-- Supports operations such as:
+It operates at the **byte level** and follows the ZIP archive specification including:
+
+- Local File Headers
+- Central Directory
+- End of Central Directory (EOCD)
+
+---
+
+## 🛠 Tech Stack
+
+- **Rust** – Systems programming language
+- **clap** – CLI argument parsing
+- **flate2** – DEFLATE compression engine
+- **zip** – ZIP archive reading/writing
+- **Manual ZIP Encoder** – Custom binary structure handling
+- **DFS Traversal** – Recursive directory traversal
+
+---
+
+## ⚙️ How To Run
+
+### 1️⃣ Clone Repository
+
+```bash
+git clone <repository-url>
+cd rust-pro
+cargo build
+cargo run -- compress file1.txt file2.txt -o output.zip
+cargo run -- decompress output.zip
+
+## 🧠 Internal Working
+
+---
+
+### 1️⃣ CLI Parsing
+
+- Implemented using `clap`
+- Supports:
   - `compress`
   - `decompress`
-- Accepts:
-  - Input file / directory path
-  - Output archive path
-  - Optional flags
-- `clap` automatically
-  - Validates argument structure
-  - Generates help messages
-  - Handles incorrect usage errors
-This ensures structured command-line interaction.
+- Validates argument structure
+- Generates help messages
+- Handles incorrect usage errors
+
 ---
-## 2. Input Validation
-Before performing any operation:
-- Checks whether the input is:
-  - Valid file
-  - Valid directory
-- Verifies read and write permissions.
-- Ensures the path exists.
-- Handles errors using Rust’s ownership and error model:
-  Result<T, E>
+
+### 2️⃣ Input Validation
+
+Before execution:
+
+- Checks if input path exists
+- Validates whether it is a file or directory
+- Ensures read/write permissions
+- Uses Rust’s `Result<T, E>` for safe error handling
+
 ---
-## 3. Compression (Byte-Level)
-Compression is performed at the byte level.
-### Steps:
-1. File is opened using `std::fs::File`.
-2. File content is read into a byte buffer (`Vec<u8>`).
-3. Manual ZIP writer is initialized.
-4. File entry is started with metadata:
-   - File name
-   - File size
-   - Timestamp
-5. Compression is applied using:
-   - `flate2` crate
+
+### 3️⃣ Compression (Byte-Level)
+
+#### Steps:
+
+1. File opened using `std::fs::File`
+2. Data read into `Vec<u8>`
+3. ZIP writer initialized
+4. Local File Header created
+5. Data compressed using:
+   - `flate2`
    - DEFLATE algorithm
-6. Compressed bytes are written into ZIP structure.
+6. Compressed bytes written into archive
+7. Central Directory entry created
 
-### Technical Flow:
-Raw Bytes  
-→ DEFLATE Compression  
-→ ZIP Local Header  
-→ Central Directory Entry  
-This ensures proper ZIP format compliance.
+
 ---
 
-## 4. Decompression
-Decompression follows the ZIP archive structure.
-### Steps:
-1. ZIP archive is opened using the `zip` crate.
-2. Central Directory (CD) is parsed.
-3. File entries are iterated recursively.
-4. For each file entry:
-   - Compressed data is read.
-   - Data is decoded using DEFLATE.
-   - Original content is written back to disk.
-5. Original directory structure is reconstructed.
+### 4️⃣ Decompression
+
+#### Steps:
+
+1. ZIP archive opened
+2. Central Directory parsed
+3. File entries iterated
+4. For each file:
+   - Compressed data read
+   - DEFLATE decoding applied
+   - Original content written back to disk
+5. Directory structure reconstructed
+
 ---
-## 5. Recursive Directory Traversal
-### Initial Implementation:
-- Used `walkdir` crate for automatic directory traversal.
-### Current Implementation:
-- Removed `walkdir` dependency.
-- Implemented manual traversal using:
-### Depth-First Search (DFS) Tree Method
-- Uses stack-based recursion.
-- Traverses:
-  - Root directory
-  - Subdirectories
-  - Leaf files
-- Maintains exact directory hierarchy inside the ZIP archive.
+
+### 5️⃣ Recursive Directory Traversal (DFS)
+
+#### Initial Implementation
+
+- Used `walkdir` crate
+
+#### Final Implementation
+
+- Removed `walkdir`
+- Implemented manual DFS traversal
+
+#### DFS Logic
+
+- Traverse root directory
+- Recursively enter subdirectories
+- Add files while maintaining relative paths
+
+#### Why DFS?
+
+- Preserves hierarchy naturally
+- Efficient recursive traversal
+
+**Time Complexity:** `O(N)`  
+**Space Complexity:** `O(H)`  
+*(H = maximum folder depth)*
+
+---
